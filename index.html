@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#c982a5">
+<title>LitanyaSafespace</title>
+<style>
+:root{--bg:#f7f4f6;--card:#fff;--ink:#242126;--muted:#737078;--accent:#c982a5;--accent-dark:#a95f84;--soft:#f8eaf1;--border:#e8e2e6;--shadow:0 5px 22px rgba(55,35,47,.07);--green:#43a047;--danger:#b84d63}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(180deg,#fff9fc,#f6f1f4);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}button,input,textarea,select{font:inherit}button{border:0;cursor:pointer}.hidden{display:none!important}
+header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}.nav{max-width:1280px;margin:auto;min-height:68px;padding:10px 18px;display:flex;align-items:center;gap:18px}.brand{font-size:21px;font-weight:850;color:#67485a;white-space:nowrap}.brand span{color:var(--accent)}nav{display:flex;gap:6px;align-items:center;flex:1;overflow:auto;scrollbar-width:none}nav::-webkit-scrollbar{display:none}.navbtn{white-space:nowrap;padding:10px 13px;border-radius:999px;background:transparent;color:#655b63;font-weight:700;font-size:13px}.navbtn:hover,.navbtn.active{background:var(--soft);color:var(--accent-dark)}.nav-actions{display:flex;gap:7px;align-items:center}.iconbtn{width:42px;height:42px;border-radius:50%;background:#f6edf2;color:#664d5b;position:relative}.badge{position:absolute;right:-1px;top:-1px;min-width:17px;height:17px;padding:0 4px;border-radius:10px;background:#d9536f;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center}
+.container{width:min(1280px,100%);margin:auto;padding:28px 18px 70px}.page{display:none}.page.active{display:block;animation:pageIn .22s ease}@keyframes pageIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.hero{text-align:center;padding:55px 10px 30px}.eyebrow{color:var(--accent);font-weight:800;letter-spacing:2px;text-transform:uppercase;font-size:11px}.hero h1{font-size:clamp(38px,7vw,70px);line-height:1.02;margin:12px 0}.hero p{max-width:700px;margin:auto;color:var(--muted);font-size:17px;line-height:1.7}.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px;box-shadow:var(--shadow)}.home-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:950px;margin:20px auto}.home-card{text-align:center}.home-card .big{font-size:26px;margin-bottom:7px}.small{font-size:13px;color:var(--muted);line-height:1.5}.primary{background:var(--accent);color:white;padding:11px 16px;border-radius:12px;font-weight:800}.secondary{background:#f3edf0;color:#5f4b57;padding:11px 16px;border-radius:12px;font-weight:750}.danger{background:#fff0f2;color:var(--danger)}
+.feed-wrap{width:min(780px,100%);margin:auto}.page-head{margin:12px 0 18px}.page-head h2{margin:0;font-size:30px}.page-head p{margin:5px 0;color:var(--muted)}.composer{margin-bottom:16px}.composer-top{display:flex;gap:10px;align-items:center}.avatar{width:44px;height:44px;border-radius:50%;background:var(--soft);color:#7b5368;display:flex;align-items:center;justify-content:center;font-weight:850;flex:none;overflow:hidden}.avatar img{width:100%;height:100%;object-fit:cover}.composer input{flex:1}.input,textarea,select{width:100%;border:1px solid #e7dfe4;background:#fff;border-radius:13px;padding:12px 14px;color:var(--ink);outline:none}.input:focus,textarea:focus,select:focus{border-color:#d7a2bb;box-shadow:0 0 0 3px #f8eaf1}.composer textarea{margin-top:12px;min-height:95px;resize:vertical}.composer-bottom{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px}.checkbox{display:flex;gap:7px;align-items:center;color:var(--muted);font-size:13px}.post{background:#fff;border:1px solid var(--border);border-radius:17px;margin:14px 0;box-shadow:0 3px 14px rgba(55,35,47,.05);overflow:hidden}.post-head{display:flex;gap:10px;padding:15px 16px 7px;align-items:center}.post-meta{min-width:0;flex:1}.post-meta strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.post-meta span{display:block;font-size:12px;color:var(--muted);margin-top:2px}.more{background:transparent;color:#777;font-size:20px;padding:5px}.post-body{padding:8px 16px 12px}.post-body p{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;margin:0;font-size:15px}.post-actions{display:flex;border-top:1px solid #f1ebee;border-bottom:1px solid #f1ebee}.post-actions button{flex:1;padding:11px 6px;background:#fff;color:#666;font-weight:700}.post-actions button:hover{background:#faf5f7}.post-actions button.liked{color:var(--accent-dark)}.comment-area{padding:10px 16px}.comment{padding:8px 0}.comment-line{display:flex;gap:8px}.comment-bubble{background:#f3f1f2;border-radius:15px;padding:8px 11px;min-width:0}.comment-bubble strong{font-size:12px;display:block}.comment-bubble p{margin:3px 0 0;font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}.comment-tools{font-size:11px;color:#777;margin:4px 0 0 51px;display:flex;gap:12px}.reply-box{margin:6px 0 3px 51px;display:flex;gap:6px}.reply-box input{font-size:12px;padding:8px 10px}.reply-list{margin-left:35px;border-left:2px solid #eee6ea;padding-left:10px}.comment-form{display:flex;gap:7px;margin-top:7px}.comment-form input{flex:1}.comment-form button{padding:9px 13px;border-radius:10px;background:var(--soft);color:#765267;font-weight:800}
+.timestamp{font-size:12px;color:var(--muted)}.empty{text-align:center;color:var(--muted);padding:30px}.error{background:#fff0f2;border:1px solid #efcbd4;color:#843e50;padding:12px;border-radius:12px;font-size:13px}.loader{text-align:center;color:var(--muted);padding:25px}
+/* Messenger */
+.messenger{height:calc(100vh - 125px);min-height:620px;display:grid;grid-template-columns:300px 1fr;gap:0;background:#fff;border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}.chat-list{border-right:1px solid var(--border);display:flex;flex-direction:column;min-height:0;overflow:hidden}.chat-list>.chat-items{min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y;-webkit-overflow-scrolling:touch}.chat-list>#chatItems{flex:0 1 42%;border-bottom:1px solid var(--border)}.chat-list>#peopleItems{flex:1 1 auto}.chat-item{touch-action:pan-y;user-select:none;-webkit-user-select:none}.chat-list-head{padding:18px;border-bottom:1px solid var(--border)}.chat-list-head h2{margin:0 0 12px}.chat-search{padding:10px 13px;background:#f4f2f3;border:0;border-radius:12px}.chat-items{overflow:auto}.chat-item{display:flex;gap:10px;padding:12px 15px;cursor:pointer}.chat-item:hover,.chat-item.active{background:#faf3f7}.chat-item.public-chat{background:#fff8fb;border-bottom:1px solid #f0e3e9}.chat-item.public-chat strong{color:var(--accent-dark)}.chat-item-text{min-width:0;flex:1}.chat-item-text strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.chat-item-text span{display:block;color:var(--muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:3px}.chat-main{display:flex;flex-direction:column;min-width:0}.chat-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}.chat-header-text{flex:1}.chat-header-text strong{display:block}.chat-header-text span{font-size:12px;color:var(--muted)}.chat-messages{flex:1;overflow:auto;padding:18px;background:linear-gradient(180deg,#fff,#fbf6f8)}.bubble-row{display:flex;margin:6px 0}.bubble-row.mine{justify-content:flex-end}.bubble{max-width:min(72%,500px);background:#eee9ec;padding:9px 12px;border-radius:17px 17px 17px 5px}.mine .bubble{background:var(--accent);color:#fff;border-radius:17px 17px 5px 17px}.bubble .reply-ref{font-size:11px;opacity:.75;border-left:2px solid currentColor;padding-left:7px;margin-bottom:5px}.bubble p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}.bubble time{display:block;font-size:10px;opacity:.7;margin-top:4px}.chat-compose{padding:11px;border-top:1px solid var(--border);background:#fff}.reply-preview{background:#f7edf2;border-radius:10px;padding:8px 10px;margin-bottom:8px;font-size:12px;display:flex;justify-content:space-between}.message-row{display:flex;gap:7px}.message-row input{flex:1;border-radius:22px;background:#f4f2f3;border:0;padding:12px 15px}.send{width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;font-weight:900}.chat-tools{display:flex;gap:7px}.mini-btn{padding:8px 10px;border-radius:10px;background:#f4edf1;color:#694f5e;font-size:12px;font-weight:800}
+/* profile / notifications */
+.profile-grid{display:grid;grid-template-columns:280px 1fr;gap:18px;max-width:1000px;margin:auto}.profile-card{text-align:center}.profile-big{width:92px;height:92px;border-radius:50%;margin:0 auto 12px;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:900;color:#80566c;overflow:hidden}.profile-big img{width:100%;height:100%;object-fit:cover}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:16px}.stat{background:#faf6f8;border-radius:12px;padding:10px}.stat strong{display:block}.stat span{font-size:11px;color:var(--muted)}.notice-item{display:flex;gap:11px;padding:14px 0;border-bottom:1px solid #eee7eb}.notice-item:last-child{border-bottom:0}.notice-item.unread{background:#fff8fb;margin:0 -10px;padding-left:10px;padding-right:10px;border-radius:12px}.notice-body{flex:1}.notice-body strong{display:block}.notice-body p{margin:4px 0;color:#625a60;font-size:13px;line-height:1.45}.modal-backdrop{position:fixed;inset:0;background:rgba(32,24,29,.48);z-index:5000;display:flex;align-items:center;justify-content:center;padding:18px}.modal{width:min(480px,100%);background:#fff;border-radius:20px;padding:22px;box-shadow:0 20px 70px rgba(0,0,0,.2)}.modal h2{margin-top:0}.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}.toast-host{position:fixed;left:0;right:0;bottom:18px;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:6000;pointer-events:none;padding:0 15px}.toast{background:#312a2f;color:#fff;padding:12px 16px;border-radius:13px;max-width:430px;width:100%;box-shadow:0 10px 30px rgba(0,0,0,.22);animation:toastIn .2s ease}.toast.success{background:#496546}.toast.error{background:#873e50}@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.footer{text-align:center;color:#9a8f95;padding:30px;font-size:12px}.muted-link{color:var(--accent-dark);text-decoration:none;font-weight:700}
+@media(max-width:850px){.nav{flex-wrap:wrap}.brand{width:100%;text-align:center}nav{order:3;width:100%}.nav-actions{position:absolute;right:12px;top:13px}.messenger{grid-template-columns:1fr}.chat-list{display:none}.profile-grid{grid-template-columns:1fr}.home-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.container{padding:18px 10px 55px}.hero{padding:40px 5px 25px}.hero h1{font-size:42px}.page-head h2{font-size:25px}.card{padding:15px;border-radius:16px}.composer{border-radius:14px}.post{border-radius:14px}.messenger{height:calc(100vh - 145px);min-height:550px;border-radius:14px}.bubble{max-width:84%}.post-actions button{font-size:12px}.home-grid{margin-top:12px}}
+
+.people-title{font-size:12px;font-weight:800;color:var(--muted);padding:12px 12px 5px;text-transform:uppercase;letter-spacing:.08em}.chat-item .mini-btn{margin-left:auto;flex:0 0 auto}.public-chat{border:1px solid var(--accent2)}
+</style>
+<style>
+/* Messenger upgrade */
+.chat-back,.chat-head-action{display:none;border:0;background:transparent;color:var(--ink);font-size:21px;padding:7px;border-radius:10px;cursor:pointer}.chat-back:hover,.chat-head-action:hover{background:#f5eef2}.chat-header .avatar{box-shadow:0 0 0 2px #fff,0 0 0 3px #eadbe2}.chat-status{display:inline-flex;align-items:center;gap:5px}.chat-status:before{content:"";width:7px;height:7px;border-radius:50%;background:#59a866;display:inline-block}.bubble-row{align-items:flex-end;gap:6px}.bubble-avatar{width:28px;height:28px;border-radius:50%;background:var(--soft);color:#7b5368;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex:none}.bubble-wrap{max-width:min(72%,500px)}.bubble-sender{font-size:11px;color:var(--muted);margin:0 0 3px 8px}.mine .bubble-sender{text-align:right;margin-right:8px}.bubble{position:relative;cursor:pointer}.bubble:hover{filter:brightness(.985)}.bubble-tools{display:none;position:absolute;right:-6px;top:-28px;background:#fff;border:1px solid var(--border);border-radius:999px;box-shadow:0 6px 18px rgba(55,35,47,.12);padding:3px;gap:2px}.bubble-row.mine .bubble-tools{right:auto;left:-6px}.bubble:hover .bubble-tools{display:flex}.bubble-tools button{border:0;background:transparent;border-radius:50%;padding:5px;cursor:pointer}.bubble-tools button:hover{background:#f6edf2}.message-reaction{font-size:11px;background:#fff;border:1px solid #eadfe4;border-radius:999px;padding:2px 6px;position:absolute;bottom:-9px;right:7px}.chat-empty-icon{font-size:34px;margin-bottom:8px}.chat-empty-title{font-weight:850;color:var(--ink)}.chat-empty-sub{font-size:13px;margin-top:4px}.chat-day{text-align:center;color:var(--muted);font-size:11px;font-weight:700;margin:14px 0}.typing-line{font-size:11px;color:var(--muted);padding:0 5px 7px;min-height:17px}.chat-compose{position:relative}.chat-compose:focus-within{box-shadow:0 -4px 18px rgba(91,58,77,.04)}
+@media(max-width:850px){.messenger-page-head{display:none}.chat-back{display:block}.chat-list{display:flex}.messenger.chat-open .chat-list{display:none}.messenger.chat-open .chat-main{display:flex}.chat-main{min-height:0}.chat-head-action{display:block}}
+@media(max-width:560px){.messenger{height:calc(100vh - 105px);min-height:520px}.chat-list-head{padding:14px}.chat-header{padding:10px 12px}.chat-messages{padding:12px 10px}.bubble-wrap{max-width:82%}.bubble{padding:8px 11px}.chat-compose{padding:8px}.message-row input{min-width:0}.people-title{padding-top:10px}}
+</style>
+<style>
+/* Facebook-style single post/profile views */
+.view-shell{max-width:760px;margin:0 auto;padding:8px 0 30px}
+.view-top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.back-btn{border:0;background:var(--card);color:var(--ink);border-radius:12px;padding:10px 14px;cursor:pointer;box-shadow:0 6px 18px rgba(91,58,77,.10);font-weight:700}
+.back-btn:hover{transform:translateY(-1px)}
+.profile-link,.comment-profile-link{cursor:pointer}
+.profile-link:hover strong,.comment-profile-link:hover strong{text-decoration:underline}
+.comment{cursor:pointer}
+.comment .comment-tools button{cursor:pointer}
+.comment-highlight{animation:commentFlash 1.8s ease}
+.notice-item[data-notif-post]{cursor:pointer}
+.new-post-alert{position:sticky;top:78px;z-index:900;margin:0 auto 12px;width:min(780px,calc(100% - 20px));display:none;justify-content:center;pointer-events:none}.new-post-alert.show{display:flex}.new-post-alert button{pointer-events:auto;background:var(--accent);color:#fff;border-radius:999px;padding:10px 17px;font-weight:850;box-shadow:0 10px 28px rgba(120,65,95,.22);animation:popIn .2s ease}@keyframes popIn{from{transform:translateY(-8px);opacity:0}to{transform:none;opacity:1}}.post.newly-arrived{animation:newPostGlow 1.8s ease}@keyframes newPostGlow{0%{box-shadow:0 0 0 5px rgba(201,130,165,.3),var(--shadow)}100%{box-shadow:0 3px 14px rgba(55,35,47,.05)}}
+.notice-item[data-notif-post]:hover{background:#fbf5f8}
+@keyframes commentFlash{0%,100%{background:transparent}30%{background:rgba(201,130,165,.16)}}
+.public-profile-head{display:flex;align-items:center;gap:16px;padding:20px;margin-bottom:16px}
+.public-profile-avatar{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;background:var(--accent2);font-size:28px;font-weight:800}
+.public-profile-name{margin:0}.public-profile-bio{margin:5px 0 0;color:var(--muted)}
+</style>
+
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="brand">Litanya<span>Safespace</span></div>
+    <nav>
+      <button class="navbtn active" data-page="home">Home</button>
+      <button class="navbtn" data-page="wall">Freedom Wall</button>
+      <button class="navbtn" data-page="realizations">Realizations</button>
+      <button class="navbtn" data-page="messenger">Messenger</button>
+      <button class="navbtn" data-page="notifications">Notifications <span id="navNotifCount"></span></button>
+      <button class="navbtn" data-page="profile">Profile</button>
+      <button class="navbtn" id="downloadBtn">Download App</button>
+      <button class="navbtn" id="githubBtn">GitHub</button>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+<section id="home" class="page active">
+  <div class="hero">
+    <div class="eyebrow">a gentle corner for you</div>
+    <h1>You deserve a safe space.</h1>
+    <p>Words for the days when you need comfort, clarity, courage, or simply a reminder that what you feel matters.</p>
+  </div>
+  <div class="home-grid">
+    <div class="card home-card"><div class="big">♡</div><h3>Freedom Wall</h3><p class="small">Share a thought using your username, Anonymous, or any nickname you choose.</p><button class="primary" onclick="showPage('wall')">Open Wall</button></div>
+    <div class="card home-card"><div class="big">◌</div><h3>Messenger</h3><p class="small">Talk privately, reply to messages, or join a LitanyaSafespace group chat.</p><button class="primary" onclick="showPage('messenger')">Open Messenger</button></div>
+    <div class="card home-card"><div class="big">✦</div><h3>Your Profile</h3><p class="small">Your username is your identity throughout the site. Your posts stay connected to your profile.</p><button class="primary" onclick="showPage('profile')">View Profile</button></div>
+  </div>
+  <div class="card" style="max-width:950px;margin:18px auto;text-align:center"><h3>Have something to share?</h3><p class="small">Your words might be exactly what someone else needs to read today.</p><button class="primary" onclick="showPage('wall')">Go to Freedom Wall →</button></div>
+</section>
+
+<section id="wall" class="page"><div class="feed-wrap">
+  <div class="page-head"><h2>Freedom Wall</h2><p>Share a realization, thought, or something you wish someone would hear.</p></div>
+  <div class="card composer">
+    <form id="postForm">
+      <div class="composer-top"><div class="avatar" id="composerAvatar">?</div><input id="postName" class="input" maxlength="40" placeholder="Display name (your username by default)"></div>
+      <textarea id="postText" required maxlength="1000" placeholder="What's on your mind?"></textarea>
+      <div class="composer-bottom"><label class="checkbox"><input type="checkbox" id="postAnonymous"> Post as Anonymous</label><button class="primary">Post to Freedom Wall</button></div>
+    </form>
+  </div>
+  <div id="posts" class="feed"><div class="loader">Loading posts...</div></div>
+</div></section>
+
+<section id="realizations" class="page"><div class="feed-wrap">
+  <div class="page-head"><h2>Realizations</h2><p>A shared space for thoughts that changed you, things you finally understood, and words you want others to see.</p></div>
+  <div class="card composer"><form id="realizationForm">
+    <div class="composer-top"><div class="avatar" id="realAvatar">?</div><input id="realName" class="input" maxlength="40" placeholder="Display name (your username by default)"></div>
+    <textarea id="realText" required maxlength="1000" placeholder="Share your realization..."></textarea>
+    <div class="composer-bottom"><label class="checkbox"><input type="checkbox" id="realAnonymous"> Post as Anonymous</label><button class="primary">Share Realization</button></div>
+  </form></div>
+  <div id="realizationsFeed" class="feed"><div class="loader">Loading realizations...</div></div>
+</div></section>
+
+<section id="messenger" class="page">
+  <div class="page-head messenger-page-head"><h2>Messenger</h2><p>Chat with people on LitanyaSafespace.</p></div>
+  <div class="messenger">
+    <aside class="chat-list">
+      <div class="chat-list-head"><h2 style="font-size:20px">Chats</h2><input id="chatSearch" class="chat-search" placeholder="Search name or username..."><div style="display:flex;gap:6px;margin-top:9px"><button class="mini-btn" id="newDmBtn">+ Message</button><button class="mini-btn" id="newGroupBtn">+ Group</button></div></div>
+      <div class="chat-items" id="chatItems"><div class="empty">No chats yet.</div></div>
+      <div class="people-title">People on LitanyaSafespace</div><div class="chat-items" id="peopleItems"><div class="empty">Loading people...</div></div>
+    </aside>
+    <section class="chat-main">
+      <div id="chatHeader" class="chat-header"><button class="chat-back" id="chatBackBtn" type="button">←</button><div class="avatar">L</div><div class="chat-header-text"><strong>LitanyaSafespace Messenger</strong><span>Select a conversation or start a new one.</span></div><button class="chat-head-action" id="chatInfoBtn" type="button" title="Chat info">ⓘ</button></div>
+      <div id="chatMessages" class="chat-messages"><div class="empty">Choose a chat to start messaging.</div></div>
+      <div class="chat-compose">
+        <div id="replyPreview" class="reply-preview hidden"><span id="replyPreviewText"></span><button id="cancelReply">×</button></div>
+        <div class="message-row"><button class="send" id="emojiBtn" title="Add symbol">+</button><input id="messageInput" placeholder="Type a message..." disabled><button class="send" id="sendMessage" disabled>➤</button></div>
+      </div>
+    </section>
+  </div>
+</section>
+
+<section id="notifications" class="page"><div style="max-width:760px;margin:auto">
+  <div class="page-head"><h2>Notifications</h2><p>Updates and messages from LitanyaSafespace.</p></div>
+  <div class="card"><div id="notificationsList"><div class="loader">Loading notifications...</div></div></div>
+</div></section>
+
+<section id="profile" class="page"><div class="profile-grid">
+  <div class="card profile-card"><div class="profile-big" id="profileAvatar">?</div><h2 id="profileUsername">Username</h2><p id="profileBio" class="small">No bio yet.</p><button class="primary" id="editProfileBtn">Edit Profile</button><div class="stats"><div class="stat"><strong id="statPosts">0</strong><span>Posts</span></div><div class="stat"><strong id="statLikes">0</strong><span>Likes</span></div><div class="stat"><strong id="statComments">0</strong><span>Comments</span></div></div></div>
+  <div><div class="page-head"><h2>Your posts</h2><p>Posts connected to your LitanyaSafespace username.</p></div><div id="profilePosts"><div class="loader">Loading profile...</div></div></div>
+</div></section>
+
+<section id="singlePostView" class="page"><div class="view-shell">
+  <div class="view-top"><button class="back-btn" id="postBackBtn">← Back</button><div class="page-head" style="margin:0"><h2>Post</h2><p>View the full conversation</p></div></div>
+  <div id="singlePostContent"><div class="loader">Loading post...</div></div>
+</div></section>
+
+<section id="publicProfileView" class="page"><div class="view-shell">
+  <div class="view-top"><button class="back-btn" id="profileBackBtn">← Back</button><div class="page-head" style="margin:0"><h2>Profile</h2><p>Posts shared on LitanyaSafespace</p></div></div>
+  <div id="publicProfileContent"><div class="loader">Loading profile...</div></div>
+</div></section>
+
+<div class="footer">LitanyaSafespace · a little place for words that stay.<br><span>Created with care by <strong>amirswiftdev</strong>.</span></div>
+</main>
+
+<div id="modalHost"></div><div id="toastHost" class="toast-host"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(() => {
+
+/* ====== EDIT THESE TWO LINKS ====== */
+const APP_DOWNLOAD_URL = "#";
+const GITHUB_URL = "#";
+const SUPABASE_URL = "https://fodmspajaeisnulphmkn.supabase.co";
+const SUPABASE_KEY = "sb_publishable_lMqChLAS3A6a3BWKpfm2BQ_lFUR7xZi";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const uid = (()=>{let x=localStorage.getItem("litanya_user_id");if(!x){x=crypto.randomUUID();localStorage.setItem("litanya_user_id",x)}return x})();
+let profile=null, activeConversation=null, replyMessage=null, conversationCache=[];
+const postCache=new Map();
+const $=id=>document.getElementById(id);
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function escAttr(s){return esc(s).replace(/\r?\n/g,"&#10;")}
+function toast(msg,type="",ms=3000){const el=document.createElement("div");el.className="toast "+type;el.textContent=msg;$("toastHost").appendChild(el);setTimeout(()=>el.remove(),ms)}
+function initials(name){return esc((name||"Anonymous").trim()[0]?.toUpperCase()||"A")}
+function relativeTime(value){if(!value)return "Recently";const d=new Date(value), diff=Math.max(0,Date.now()-d.getTime()), sec=Math.floor(diff/1000), min=Math.floor(sec/60), hr=Math.floor(min/60), day=Math.floor(hr/24);if(sec<10)return "just now";if(min<1)return `${sec} seconds ago`;if(min===1)return "1 minute ago";if(min<60)return `${min} minutes ago`;if(hr===1)return "1 hour ago";if(hr<24)return `${hr} hours ago`;if(day===1)return "yesterday";if(day<7)return `${day} days ago`;return d.toLocaleString(undefined,{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"})}
+function fullTime(v){return new Date(v).toLocaleString()}
+function postTime(v){if(!v)return "Time unavailable";const d=new Date(v);if(Number.isNaN(d.getTime()))return "Time unavailable";return d.toLocaleString(undefined,{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"})}
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+async function safeInsert(table,row){const {data,error}=await supabase.from(table).insert(row).select().single();return {data,error}}
+
+/* ===== CONTENT SAFETY =====
+   This is a client-side first check. The SQL trigger supplied below should also
+   be installed in Supabase so users cannot bypass the filter from the browser. */
+const BAD_WORDS=[
+  "putangina","putang ina","puta","tanga","gago","gaga","tarantado","ulol",
+  "bobo","leche","lintik","hayop","pakshet","pakyu","fuck","fucking",
+  "shit","bullshit","bitch","asshole","motherfucker","dick","pussy",
+  "cunt","slut","whore"
+];
+function normalizeModerationText(value){
+  return String(value||"").toLowerCase()
+    .normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/[@4]/g,"a").replace(/[3]/g,"e").replace(/[1!]/g,"i")
+    .replace(/[0]/g,"o").replace(/[5$]/g,"s").replace(/[^a-z0-9]+/g," ")
+    .replace(/\s+/g," ").trim();
+}
+function containsBadWords(value){
+  const t=normalizeModerationText(value);
+  return BAD_WORDS.some(w=>{
+    const n=normalizeModerationText(w);
+    return n && (t===n || t.includes(" "+n+" ") || t.startsWith(n+" ") || t.endsWith(" "+n));
+  });
+}
+function rejectBadWords(value){
+  if(!containsBadWords(value))return false;
+  toast("Hindi puwedeng i-post o i-send ang message na may mura o offensive na salita.","error",4500);
+  return true;
+}
+
+const basePages=new Set(["home","wall","realizations","messenger","notifications","profile"]);
+window.showPage=async function(id,push=true){
+  if(!document.getElementById(id)) return;
+  if(push && basePages.has(id)){
+    const current=history.state;
+    if(current?.page!==id || current?.appView){
+      history.pushState({page:id},"",location.href.split("#")[0]+`#${encodeURIComponent(id)}`);
+    }
+  }
+  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));
+  document.querySelectorAll(".navbtn[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(id==="wall")loadPosts();
+  if(id==="realizations")loadRealizations();
+  if(id==="profile")loadProfilePage();
+  if(id==="notifications")loadNotifications(true);
+  if(id==="messenger")loadConversations();
+};
+function openAppView(type,id,extra=null){
+  if(!id)return;
+  if(type==="post")openPostView(id,extra,true);
+  else if(type==="profile")openPublicProfile(id,true);
+}
+function goBackFromView(){
+  if(history.length>1){history.back();return;}
+  showPage("wall",true);
+}
+window.addEventListener("popstate",e=>{
+  const st=e.state;
+  if(st?.appView==="post")openPostView(st.id,st.extra,false);
+  else if(st?.appView==="profile")openPublicProfile(st.id,false);
+  else showPage(st?.page&&basePages.has(st.page)?st.page:"home",false);
+});
+window.addEventListener("load",()=>{
+  const clean=location.href.split("#")[0];
+  if(!history.state || (!history.state.page && !history.state.appView)) history.replaceState({page:"home"},"",clean+"#home");
+  else if(location.hash==="") history.replaceState(history.state,"",clean+`#${history.state.page||"home"}`);
+});
+document.querySelectorAll(".navbtn[data-page]").forEach(b=>b.onclick=e=>{e.preventDefault();showPage(b.dataset.page,true)});
+$("downloadBtn").onclick=()=>APP_DOWNLOAD_URL==="#"?toast("Edit APP_DOWNLOAD_URL in the HTML to add your APK link."):location.href=APP_DOWNLOAD_URL;
+$("githubBtn").onclick=()=>GITHUB_URL==="#"?toast("Edit GITHUB_URL in the HTML to add your repository link."):window.open(GITHUB_URL,"_blank");
+
+async function loadProfile(){const {data,error}=await supabase.from("profiles").select("*").eq("user_id",uid).maybeSingle();if(error){console.warn(error);return null}profile=data;return data}
+async function ensureProfile(){const p=await loadProfile();if(p)return p;showProfileSetup();return null}
+function showProfileSetup(edit=false){const p=profile||{};$("modalHost").innerHTML=`<div class="modal-backdrop"><div class="modal"><h2>${edit?"Edit your profile":"Create your LitanyaSafespace username"}</h2><p class="small">Starting now, this username will be your identity across the website. You can still use Anonymous or a nickname for individual Freedom Wall posts.</p><form id="profileForm"><label class="small">Username</label><input id="usernameInput" class="input" required maxlength="30" pattern="[A-Za-z0-9_.-]{3,30}" value="${escAttr(p.username||"")}" placeholder="e.g. amirswiftdev"><label class="small" style="display:block;margin-top:10px">Bio</label><textarea id="bioInput" class="input" maxlength="160" placeholder="A little about you...">${esc(p.bio||"")}</textarea><div class="modal-actions">${edit?'<button type="button" class="secondary" id="closeModal">Cancel</button>':''}<button class="primary">Save profile</button></div></form></div></div>`;$("closeModal")?.addEventListener("click",()=>$("modalHost").innerHTML="");$("profileForm").onsubmit=async e=>{e.preventDefault();const username=$("usernameInput").value.trim();if(!/^[A-Za-z0-9_.-]{3,30}$/.test(username))return toast("Username must be 3–30 characters: letters, numbers, _, ., or -","error");const row={id:uid,user_id:uid,username,display_name:username,bio:$("bioInput").value.trim(),updated_at:new Date().toISOString()};const {error}=await supabase.from("profiles").upsert(row,{onConflict:"user_id"});if(error){toast(error.message,"error");return}profile=await loadProfile();$("modalHost").innerHTML="";applyProfileUI();toast("Profile saved.","success");if(!edit)await seedThankYouNotification()}}
+function applyProfileUI(){if(!profile)return;const name=profile.username||"User";["composerAvatar","realAvatar"].forEach(id=>$(id).textContent=initials(name));$("postName").placeholder=`Display name (${name} by default)`;$("realName").placeholder=`Display name (${name} by default)`;$("profileUsername").textContent="@"+name;$("profileBio").textContent=profile.bio||"No bio yet.";$("profileAvatar").textContent=initials(name)}
+
+async function seedThankYouNotification(){const {data}=await supabase.from("notifications").select("id").eq("user_id",uid).eq("type","system").ilike("title","%amirswiftdev%").limit(1);if(!data?.length){await supabase.from("notifications").insert({user_id:uid,type:"system",title:"A thank-you from amirswiftdev",body:"Thank you for using and supporting LitanyaSafespace. This space exists because people like you choose to share, listen, and support one another.",is_read:false})}}
+
+function profileClickable(userId,name,anonymous=false,cls=""){if(anonymous||!userId)return `<span class="${cls}">${esc(name)}</span>`;return `<span class="${cls} profile-link" data-profile-id="${escAttr(userId)}">${esc(name)}</span>`}
+function avatarClickable(userId,name,anonymous=false){if(anonymous||!userId)return `<div class="avatar">${initials(name)}</div>`;return `<div class="avatar profile-link" data-profile-id="${escAttr(userId)}">${initials(name)}</div>`}
+function postCard(p,comments=[]){const anonymous=!!p.is_anonymous;const name=anonymous?"Anonymous":(p.display_name||profile?.username||"Anonymous");const liked=!!p._liked;const commentsHtml=renderComments(comments,p.id);const exact=postTime(p.created_at);return `<article class="post" id="post-${escAttr(p.id)}"><div class="post-head">${avatarClickable(p.user_id,name,anonymous)}<div class="post-meta">${profileClickable(p.user_id,name,anonymous)}<span title="${escAttr(exact)}">${esc(relativeTime(p.created_at))} · ${esc(exact)}</span></div><button class="more" title="Posted ${escAttr(exact)}">⋯</button></div><div class="post-body"><p>${esc(p.content||"")}</p></div><div class="post-actions"><button class="${liked?"liked":""}" data-action="like" data-id="${escAttr(p.id)}">${liked?"♥":"♡"} Like <span id="like-count-${escAttr(p.id)}">${p._likeCount||0}</span></button><button data-action="comment" data-id="${escAttr(p.id)}">💬 Comment <span>${Number(p._commentCount ?? comments.length ?? 0)}</span></button><button data-action="replypost" data-id="${escAttr(p.id)}">↩ Reply</button></div><div class="comment-area">${commentsHtml}<form class="comment-form" data-post="${escAttr(p.id)}"><input maxlength="500" placeholder="Write a comment as @${escAttr(profile?.username||"user")}..."><button>Send</button></form></div></article>`}
+function renderComments(comments,postId){if(!comments?.length)return "";const top=comments.filter(c=>!c.parent_comment_id);return top.map(c=>commentHtml(c,comments,postId)).join("")}
+function commentHtml(c,all,postId){const children=all.filter(x=>x.parent_comment_id===c.id);const name=c.display_name||"Anonymous";return `<div class="comment" id="comment-${escAttr(c.id)}" data-open-post="${escAttr(postId)}"><div class="comment-line">${avatarClickable(c.user_id,name,!c.user_id)}<div class="comment-bubble">${profileClickable(c.user_id,name,!c.user_id,"comment-profile-link")}<p>${esc(c.content)}</p></div></div><div class="comment-tools"><button data-reply-comment="${escAttr(c.id)}" data-post="${escAttr(postId)}">Reply</button><span>${esc(relativeTime(c.created_at))}</span></div><div class="reply-list">${children.map(x=>commentHtml(x,all,postId)).join("")}</div></div>`}
+async function loadPosts(){await loadFeed("wall",$("posts"))}async function loadRealizations(){await loadFeed("realization",$("realizationsFeed"))}
+async function loadFeed(kind,box){box.innerHTML='<div class="loader">Loading...</div>';let q=supabase.from("freedom_posts").select("*").order("created_at",{ascending:false}).limit(100);const {data,error}=await q;if(error){box.innerHTML=`<div class="error">Could not load posts: ${esc(error.message)}</div>`;return}const rows=(data||[]).filter(p=>(p.post_type||"freedom").toLowerCase()===kind||(kind==="wall"&&["wall","freedom"].includes((p.post_type||"").toLowerCase()))).sort((a,b)=>new Date(b.created_at||0)-new Date(a.created_at||0));if(!rows.length){box.innerHTML='<div class="empty">No posts found yet. Be the first to share!</div>';return}const ids=rows.map(p=>p.id);const [{data:likes},{data:comments}]=await Promise.all([supabase.from("post_likes").select("post_id,user_id").in("post_id",ids),supabase.from("comments").select("*").in("post_id",ids).order("created_at",{ascending:true})]);rows.forEach(p=>{const ls=(likes||[]).filter(x=>String(x.post_id)===String(p.id));const cs=(comments||[]).filter(c=>String(c.post_id)===String(p.id));p._likeCount=ls.length;p._liked=ls.some(x=>String(x.user_id)===uid);p._commentCount=cs.length;p._comments=cs;postCache.set(String(p.id),p)});box.innerHTML=rows.map(p=>postCard(p,p._comments||[])).join("");bindPostEvents(box)}
+function bindPostEvents(box){
+  if(!box)return;
+  box.querySelectorAll("[data-profile-id]").forEach(el=>{el.onclick=e=>{e.preventDefault();e.stopPropagation();const id=el.getAttribute("data-profile-id");if(id)openPublicProfile(id,true)}});
+  box.querySelectorAll("[data-action=like]").forEach(btn=>{btn.onclick=e=>{e.preventDefault();e.stopPropagation();toggleLike(btn.dataset.id,btn)}});
+  box.querySelectorAll("[data-action=comment]").forEach(btn=>{btn.onclick=e=>{e.preventDefault();e.stopPropagation();openPostView(btn.dataset.id,null,true)}});
+  box.querySelectorAll("[data-action=replypost]").forEach(btn=>{btn.onclick=e=>{e.preventDefault();e.stopPropagation();openPostView(btn.dataset.id,null,true)}});
+  box.querySelectorAll(".comment").forEach(c=>{c.onclick=e=>{if(e.target.closest("button")||e.target.closest("input")||e.target.closest("[data-profile-id]"))return;const postId=c.getAttribute("data-open-post");if(postId)openPostView(postId,c.id,true)}});
+  box.querySelectorAll(".comment-form").forEach(f=>f.onsubmit=async e=>{e.preventDefault();e.stopPropagation();const input=f.querySelector("input");await addComment(f.dataset.post,null,input.value,input)});
+  box.querySelectorAll("[data-reply-comment]").forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();showReplyInput(btn.dataset.post,btn.dataset.replyComment,btn.closest(".comment"))});
+}
+async function openPostView(postId,highlightId=null,push=true){
+  const key=decodeURIComponent(String(postId??"")).trim();
+  if(!key)return;
+  if(push)history.pushState({appView:"post",id:key,extra:highlightId},"",`#post/${encodeURIComponent(key)}`);
+  showPage("singlePostView",false);
+  $("singlePostContent").innerHTML='<div class="loader">Loading post...</div>';
+
+  /* Use the exact post already loaded in the feed as a fallback. This prevents
+     a valid clicked post from becoming "Post not found" when the single-row
+     Supabase lookup is temporarily blocked/stale. */
+  let p=postCache.get(key)||null;
+  let postError=null;
+  const result=await supabase.from("freedom_posts").select("*").eq("id",key).maybeSingle();
+  if(result.error)postError=result.error;
+  if(result.data)p=result.data;
+  if(!p){
+    $("singlePostContent").innerHTML=`<div class="error">${esc(postError?.message||"Post not found.")}</div>`;
+    return;
+  }
+  postCache.set(String(p.id),p);
+  const realId=String(p.id);
+  const {data:likes}=await supabase.from("post_likes").select("post_id,user_id").eq("post_id",realId);
+  const {data:comments}=await supabase.from("comments").select("*").eq("post_id",realId).order("created_at",{ascending:true});
+  p._likeCount=(likes||[]).length;
+  p._liked=(likes||[]).some(x=>String(x.user_id)===uid);
+  p._commentCount=(comments||[]).length;
+  p._comments=comments||[];
+  postCache.set(String(p.id),p);
+  $("singlePostContent").innerHTML=postCard(p,comments||[]);
+  bindPostEvents($("singlePostContent"));
+  if(highlightId){const el=$(highlightId);if(el){el.classList.add("comment-highlight");setTimeout(()=>el.scrollIntoView({behavior:"smooth",block:"center"}),80)}}
+}
+async function openPublicProfile(userId,push=true){
+  const key=decodeURIComponent(String(userId??"")).trim();
+  if(!key)return;
+  if(push)history.pushState({appView:"profile",id:key},"",`#profile/${encodeURIComponent(key)}`);
+  showPage("publicProfileView",false);
+  $("publicProfileContent").innerHTML='<div class="loader">Loading profile...</div>';
+
+  /* Try the current schema first (user_id), then the legacy id column.
+     If an older post has no matching profile row, still build a public profile
+     from that user's posts instead of showing "Profile not found". */
+  let u=null, profileError=null;
+  let r=await supabase.from("profiles").select("*").eq("user_id",key).maybeSingle();
+  if(r.error)profileError=r.error;
+  u=r.data||null;
+  if(!u){
+    r=await supabase.from("profiles").select("*").eq("id",key).maybeSingle();
+    if(r.data)u=r.data;
+    else if(r.error)profileError=r.error;
+  }
+
+  const {data:posts,error:postsError}=await supabase.from("freedom_posts").select("*").eq("user_id",key).order("created_at",{ascending:false}).limit(100);
+  const ps=posts||[];
+  if(!u && ps.length){
+    const first=ps.find(x=>x.display_name&&!x.is_anonymous)||ps[0];
+    u={user_id:key,username:first?.display_name||"User",bio:""};
+  }
+  if(!u){
+    $("publicProfileContent").innerHTML=`<div class="error">${esc(postsError?.message||profileError?.message||"This profile has no public profile information yet.")}</div>`;
+    return;
+  }
+  const ids=ps.map(x=>x.id);
+  const {data:likes}=ids.length?await supabase.from("post_likes").select("post_id,user_id").in("post_id",ids):{data:[]};
+  const {data:comments}=ids.length?await supabase.from("comments").select("*").in("post_id",ids).order("created_at",{ascending:true}):{data:[]};
+  ps.forEach(p=>{const ls=(likes||[]).filter(x=>String(x.post_id)===String(p.id));p._likeCount=ls.length;p._liked=ls.some(x=>String(x.user_id)===uid);postCache.set(String(p.id),p)});
+  const displayUser=u.username||u.display_name||"User";
+  $("publicProfileContent").innerHTML=`<div class="card public-profile-head"><div class="public-profile-avatar">${initials(displayUser)}</div><div><h2 class="public-profile-name">@${esc(displayUser)}</h2><p class="public-profile-bio">${esc(u.bio||"No bio yet.")}</p></div></div><div class="feed">${ps.length?ps.map(p=>postCard(p,(comments||[]).filter(c=>String(c.post_id)===String(p.id)))).join(""):'<div class="empty">No public posts yet.</div>'}</div>`;
+  bindPostEvents($("publicProfileContent"));
+}
+$("postBackBtn").onclick=goBackFromView;$("profileBackBtn").onclick=goBackFromView;
+function showReplyInput(postId,parentId,holder){document.querySelectorAll(".reply-box").forEach(x=>x.remove());const div=document.createElement("div");div.className="reply-box";div.innerHTML=`<input maxlength="500" placeholder="Reply to comment..."><button class="mini-btn">Reply</button>`;holder.appendChild(div);div.querySelector("button").onclick=async()=>addComment(postId,parentId,div.querySelector("input").value,div.querySelector("input"));div.querySelector("input").focus()}
+async function sendNotification(targetUserId,type,title,body,postId=null,commentId=null,conversationId=null,messageId=null){
+  if(!targetUserId || String(targetUserId)===String(uid)) return;
+  const row={user_id:targetUserId,type,title,body,is_read:false};
+  if(postId)row.post_id=String(postId);
+  if(commentId)row.comment_id=String(commentId);
+  if(conversationId)row.conversation_id=String(conversationId);
+  if(messageId)row.message_id=String(messageId);
+  const {error}=await supabase.from("notifications").insert(row);
+  if(error) console.warn("Notification could not be created:",error.message);
+}
+
+async function getPostOwner(postId){
+  const cached=postCache.get(String(postId));
+  if(cached?.user_id) return cached.user_id;
+  const {data}=await supabase.from("freedom_posts").select("user_id,display_name").eq("id",postId).maybeSingle();
+  if(data) postCache.set(String(postId),data);
+  return data?.user_id||null;
+}
+
+async function toggleLike(postId,button){
+  const {data}=await supabase.from("post_likes").select("post_id").eq("post_id",postId).eq("user_id",uid).maybeSingle();
+  if(data){
+    const {error}=await supabase.from("post_likes").delete().eq("post_id",postId).eq("user_id",uid);
+    if(error)return toast(error.message,"error");
+    button.classList.remove("liked");
+    button.innerHTML=button.innerHTML.replace("♥","♡");
+    const c=button.querySelector("span");
+    c.textContent=Math.max(0,Number(c.textContent)-1); const cached=postCache.get(String(postId)); if(cached) cached._likeCount=Math.max(0,Number(cached._likeCount||0)-1);
+  }else{
+    const {error}=await supabase.from("post_likes").insert({post_id:postId,user_id:uid});
+    if(error)return toast(error.message,"error");
+    button.classList.add("liked");
+    button.innerHTML=button.innerHTML.replace("♡","♥");
+    const c=button.querySelector("span");
+    c.textContent=Number(c.textContent)+1; const cached=postCache.get(String(postId)); if(cached) cached._likeCount=Number(cached._likeCount||0)+1;
+    const owner=await getPostOwner(postId);
+    await sendNotification(owner,"like","Someone reacted to your post",`${profile?.username||"Someone"} reacted to your post.`,postId,null);
+  }
+}
+async function addComment(postId,parentId,text,input){
+  const content=(text||"").trim();
+  if(!content)return;
+  if(rejectBadWords(content))return;
+  const commentId=crypto.randomUUID();
+  const displayName=profile?.username||"Anonymous";
+  const createdAt=new Date().toISOString();
+  const {error}=await supabase.from("comments").insert({
+    id:commentId,
+    post_id:String(postId),
+    user_id:uid,
+    display_name:displayName,
+    content,
+    parent_comment_id:parentId||null
+  });
+  if(error){toast(error.message,"error");return}
+
+  const postOwner=await getPostOwner(postId);
+  if(parentId){
+    const {data:parentComment}=await supabase.from("comments").select("user_id,display_name").eq("id",parentId).maybeSingle();
+    const replyTarget=parentComment?.user_id || postOwner;
+    await sendNotification(replyTarget,"reply","Someone replied to your comment",`${displayName} replied to your comment.`,postId,parentId);
+  }else{
+    await sendNotification(postOwner,"comment","Someone commented on your post",`${displayName} commented on your post.`,postId,commentId);
+  }
+
+  /* Facebook-style behavior: keep the user on the same post/page.
+     Do not reload the whole feed after every comment. */
+  input.value="";
+  const newComment={id:commentId,post_id:String(postId),user_id:uid,display_name:displayName,content,parent_comment_id:parentId||null,created_at:createdAt};
+  const post=document.getElementById(`post-${CSS.escape(String(postId))}`);
+  if(post){
+    const html=commentHtml(newComment,[newComment],postId);
+    if(parentId){
+      const parent=document.getElementById(`comment-${CSS.escape(String(parentId))}`);
+      const replyList=parent?.querySelector(":scope > .reply-list");
+      if(replyList) replyList.insertAdjacentHTML("beforeend",html);
+      else if(parent) parent.insertAdjacentHTML("beforeend",`<div class="reply-list">${html}</div>`);
+    }else{
+      const form=post.querySelector(`.comment-form[data-post="${CSS.escape(String(postId))}"]`);
+      if(form) form.insertAdjacentHTML("beforebegin",html);
+    }
+
+    const commentButton=post.querySelector(`[data-action="comment"][data-id="${CSS.escape(String(postId))}"] span`);
+    if(commentButton) commentButton.textContent=Number(commentButton.textContent||0)+1; const cached=postCache.get(String(postId)); if(cached) cached._commentCount=Number(cached._commentCount||0)+1;
+
+    const holder=parentId?post.querySelector(`#comment-${CSS.escape(String(parentId))}`):post;
+    bindPostEvents(post.closest(".feed")||post.parentElement);
+    if(parentId){
+      const replyBox=post.querySelector(".reply-box");
+      if(replyBox)replyBox.remove();
+    }
+    requestAnimationFrame(()=>post.scrollIntoView({behavior:"smooth",block:"nearest"}));
+  }
+  toast("Comment added.","success");
+}
+
+async function submitPost(type){const isReal=type==="realization";const text=$(isReal?"realText":"postText");const nameInput=$(isReal?"realName":"postName");const anon=$(isReal?"realAnonymous":"postAnonymous");const content=text.value.trim();if(!content)return;if(rejectBadWords(content))return;const display=anon.checked?"Anonymous":(nameInput.value.trim()||profile.username);const {error}=await supabase.from("freedom_posts").insert({user_id:uid,display_name:display,content,post_type:type,is_anonymous:anon.checked});if(error){toast(error.message,"error");return}text.value="";nameInput.value="";anon.checked=false;toast(isReal?"Realization shared!":"Posted successfully!","success");isReal?loadRealizations():loadPosts()}
+$("postForm").onsubmit=e=>{e.preventDefault();submitPost("freedom")};$("realizationForm").onsubmit=e=>{e.preventDefault();submitPost("realization")};
+
+/* ===== MESSENGER ===== */
+/* ===== PUBLIC COMMUNITY CHAT ===== */
+async function ensurePublicChat(){
+  const {data:groups,error:gerr}=await supabase.from("conversations").select("*").eq("type","group").ilike("name","Public Chat").limit(1);
+  if(gerr)return {error:gerr};
+  let chat=groups?.[0]||null;
+  if(!chat){
+    const created=await safeInsert("conversations",{type:"group",name:"Public Chat",created_by:uid});
+    if(created.error)return {error:created.error};
+    chat=created.data;
+  }
+  const {data:member,error:merr}=await supabase.from("conversation_members").select("conversation_id").eq("conversation_id",chat.id).eq("user_id",uid).maybeSingle();
+  if(merr)return {error:merr};
+  if(!member){
+    const {error}=await supabase.from("conversation_members").insert({conversation_id:chat.id,user_id:uid});
+    if(error)return {error};
+  }
+  return {data:chat};
+}
+
+async function loadConversations(){
+  if(!profile)return;
+  const publicResult=await ensurePublicChat();
+  if(publicResult.data){
+    const publicChat=publicResult.data;
+    const existing=conversationCache.find(x=>x.id===publicChat.id);
+    if(!existing)conversationCache.unshift(publicChat);
+  }
+  const {data:members,error}=await supabase.from("conversation_members").select("conversation_id,last_read_at").eq("user_id",uid);
+  if(error){console.warn(error);$("chatItems").innerHTML='<div class="error">Unable to load chats. Check Supabase permissions.</div>';return}
+  const ids=[...new Set((members||[]).map(x=>x.conversation_id))];
+  if(!ids.length){$("chatItems").innerHTML='<div class="empty">No chats yet.<br>Start a message or open Public Chat.</div>';return}
+  const {data:convs}=await supabase.from("conversations").select("*").in("id",ids).order("updated_at",{ascending:false});
+  const publicId=publicResult.data?.id;
+  const ordered=[...(convs||[])].sort((a,b)=>a.id===publicId?-1:b.id===publicId?1:0);
+  conversationCache=ordered;
+  const {data:allMembers}=await supabase.from("conversation_members").select("conversation_id,user_id").in("conversation_id",ids);
+  const otherIds=[...new Set((allMembers||[]).map(x=>x.user_id).filter(x=>x!==uid))];
+  const {data:profiles}=otherIds.length?await supabase.from("profiles").select("user_id,username").in("user_id",otherIds):{data:[]};
+  const nameMap=new Map((profiles||[]).map(x=>[x.user_id,(x.display_name||x.username||'User').trim()||'User']));
+  $("chatItems").innerHTML=conversationCache.map(c=>{
+    const mem=(allMembers||[]).filter(x=>x.conversation_id===c.id);
+    const isPublic=c.id===publicId || (c.type==="group" && String(c.name||"").toLowerCase()==="public chat");
+    const title=isPublic?"Public Chat":c.type==="group"?(c.name||"Group Chat"):(nameMap.get(mem.find(x=>x.user_id!==uid)?.user_id)||"Direct message");
+    return `<div class="chat-item ${isPublic?"public-chat":""}" data-chat="${escAttr(c.id)}"><div class="avatar">${isPublic?"🌐":initials(title)}</div><div class="chat-item-text"><strong>${esc(title)}</strong><span>${isPublic?"Everyone can chat here":c.type==="group"?"Group chat":"Direct message"}</span></div></div>`
+  }).join("");
+  document.querySelectorAll("[data-chat]").forEach(x=>x.onclick=()=>openConversation(x.dataset.chat));
+
+  /* Show every profile, even when username is blank. Use display_name first. */
+  const {data:people,error:peopleError}=await supabase.from("profiles").select("user_id,username,display_name,bio").neq("user_id",uid).order("display_name",{ascending:true}).limit(300);
+  if(peopleError){$("peopleItems").innerHTML='<div class="empty">Could not load people.</div>';} else {
+    $("peopleItems").innerHTML=(people||[]).map(u=>{
+      const personName=(u.display_name||u.username||"User").trim()||"User";
+      const handle=u.username?`@${u.username}`:"No username set";
+      return `<div class="chat-item" data-person-user="${escAttr(u.user_id)}" data-person-name="${escAttr(personName)}"><div class="avatar">${initials(personName)}</div><div class="chat-item-text"><strong>${esc(personName)}</strong><span>${esc(handle)} · ${esc(u.bio||"Available to chat")}</span></div><button class="mini-btn" type="button">Chat</button></div>`;
+    }).join("")||'<div class="empty">No other users found.</div>';
+    document.querySelectorAll("[data-person-user]").forEach(x=>x.onclick=()=>createDMById(x.dataset.personUser,x.dataset.personName));
+  }
+}
+async function openConversation(id){
+  activeConversation=id;replyMessage=null;$('replyPreview').classList.add('hidden');
+  const c=conversationCache.find(x=>x.id===id)||{id};
+  const {data:members}=await supabase.from('conversation_members').select('user_id').eq('conversation_id',id);
+  const ids=(members||[]).map(x=>x.user_id).filter(x=>x!==uid);
+  const {data:ps}=ids.length?await supabase.from('profiles').select('user_id,username,display_name').in('user_id',ids):{data:[]};
+  const isPublic=c.type==='group'&&String(c.name||'').toLowerCase()==='public chat';
+  const title=isPublic?'Public Chat':c.type==='group'?(c.name||'Group Chat'):((ps?.[0]?.display_name||ps?.[0]?.username||'Direct message').trim()||'Direct message');
+  const subtitle=isPublic?'Everyone can chat here':c.type==='group'?`${(members||[]).length} members`:'Active conversation';
+  $('chatHeader').innerHTML=`<button class="chat-back" id="chatBackBtn" type="button">←</button><div class="avatar">${isPublic?'🌐':initials(title)}</div><div class="chat-header-text"><strong>${esc(title)}</strong><span class="chat-status">${esc(subtitle)}</span></div><button class="chat-head-action" id="chatInfoBtn" type="button" title="Chat info">ⓘ</button>`;
+  $('chatBackBtn').onclick=()=>{document.querySelector('.messenger')?.classList.remove('chat-open');activeConversation=null;$('messageInput').disabled=true;$('sendMessage').disabled=true};
+  $('chatInfoBtn').onclick=()=>toast(isPublic?'Public Chat · everyone can join':`${title} · messages are stored in Supabase.`,'success');
+  $('messageInput').disabled=false;$('sendMessage').disabled=false;
+  document.querySelector('.messenger')?.classList.add('chat-open');
+  await supabase.from('conversation_members').update({last_read_at:new Date().toISOString()}).eq('conversation_id',id).eq('user_id',uid);
+  await loadMessages();
+}
+async function loadMessages(){
+  if(!activeConversation)return;
+  const {data,error}=await supabase.from('messages').select('*').eq('conversation_id',activeConversation).is('deleted_at',null).order('created_at',{ascending:true}).limit(300);
+  if(error){$('chatMessages').innerHTML=`<div class="error">${esc(error.message)}</div>`;return}
+  const messages=data||[], replyMap=new Map(messages.map(m=>[m.id,m]));
+  const senderIds=[...new Set(messages.map(m=>m.sender_id).filter(Boolean))];
+  const {data:senderProfiles}=senderIds.length?await supabase.from('profiles').select('user_id,username,display_name').in('user_id',senderIds):{data:[]};
+  const senderMap=new Map((senderProfiles||[]).map(x=>[x.user_id,(x.display_name||x.username||'User').trim()||'User']));
+  const html=messages.map((m,i)=>{
+    const mine=String(m.sender_id)===String(uid), prev=messages[i-1];
+    const sender=senderMap.get(m.sender_id)||'Anonymous';
+    const showName=!mine && (!prev || prev.sender_id!==m.sender_id);
+    const day=new Date(m.created_at).toLocaleDateString([], {month:'short',day:'numeric',year:'numeric'});
+    const prevDay=prev?new Date(prev.created_at).toLocaleDateString([], {month:'short',day:'numeric',year:'numeric'}):'';
+    const dayBreak=!prev||day!==prevDay;
+    return `${dayBreak?`<div class="chat-day">${esc(day)}</div>`:''}<div class="bubble-row ${mine?'mine':''}" data-message-row="${escAttr(m.id)}">${!mine?`<div class="bubble-avatar">${initials(sender)}</div>`:''}<div class="bubble-wrap">${showName?`<div class="bubble-sender">${esc(sender)}</div>`:''}<div class="bubble" data-message="${escAttr(m.id)}"><div class="bubble-tools"><button type="button" data-msg-action="reply" title="Reply">↩</button>${mine?'<button type="button" data-msg-action="delete" title="Delete">⌫</button>':''}<button type="button" data-msg-action="react" title="React">♡</button></div>${m.reply_to_id&&replyMap.has(m.reply_to_id)?`<div class="reply-ref">${esc((replyMap.get(m.reply_to_id).content||'').slice(0,90))}</div>`:''}<p>${esc(m.content)}</p><time>${esc(new Date(m.created_at).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}))}</time></div></div></div>`;
+  }).join('');
+  $('chatMessages').innerHTML=html||'<div class="empty"><div class="chat-empty-icon">💬</div><div class="chat-empty-title">No messages yet</div><div class="chat-empty-sub">Say hello and start the conversation.</div></div>';
+  $('chatMessages').querySelectorAll('[data-message]').forEach(el=>{
+    el.onclick=e=>{if(e.target.closest('.bubble-tools'))return;const m=messages.find(x=>x.id===el.dataset.message);if(m)setReplyMessage(m)};
+  });
+  $('chatMessages').querySelectorAll('[data-msg-action]').forEach(btn=>btn.onclick=async e=>{
+    e.stopPropagation();const row=btn.closest('[data-message-row]');const m=messages.find(x=>x.id===row?.dataset.messageRow);if(!m)return;
+    const action=btn.dataset.msgAction;
+    if(action==='reply')return setReplyMessage(m);
+    if(action==='react'){const b=btn.closest('.bubble');if(!b.querySelector('.message-reaction'))b.insertAdjacentHTML('beforeend','<span class="message-reaction">♡</span>');return}
+    if(action==='delete' && String(m.sender_id)===String(uid)){if(!confirm('Delete this message?'))return;const {error}=await supabase.from('messages').update({deleted_at:new Date().toISOString()}).eq('id',m.id).eq('sender_id',uid);if(error)toast(error.message,'error');else loadMessages()}
+  });
+  $('chatMessages').scrollTop=$('chatMessages').scrollHeight;
+}
+function setReplyMessage(m){replyMessage=m;$("replyPreviewText").textContent=`Replying to: ${m.content.slice(0,90)}`;$("replyPreview").classList.remove("hidden");$("messageInput").focus()}$("cancelReply").onclick=()=>{replyMessage=null;$("replyPreview").classList.add("hidden")};
+async function sendMessage(){
+  const input=$("messageInput"),content=input.value.trim();if(!content||!activeConversation)return;if(rejectBadWords(content))return;
+  const messageId=crypto.randomUUID();
+  const {error}=await supabase.from("messages").insert({id:messageId,conversation_id:activeConversation,sender_id:uid,content,reply_to_id:replyMessage?.id||null});if(error){toast(error.message,"error");return}
+  const {data:members}=await supabase.from("conversation_members").select("user_id").eq("conversation_id",activeConversation);
+  const recipients=(members||[]).map(x=>x.user_id).filter(id=>String(id)!==String(uid));
+  const senderName=profile?.display_name||profile?.username||"Someone";
+  for(const target of recipients)await sendNotification(target,"message",`${senderName} sent you a message`,`${senderName} sent you a message.`,null,null,activeConversation,messageId);
+  input.value="";replyMessage=null;$("replyPreview").classList.add("hidden");await supabase.from("conversations").update({updated_at:new Date().toISOString()}).eq("id",activeConversation);await loadMessages();loadConversations();
+}
+$("sendMessage").onclick=sendMessage;$("messageInput").onkeydown=e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage()}};$("emojiBtn").onclick=()=>{$("messageInput").value+="♡";$("messageInput").focus()};
+async function findUser(username){const {data,error}=await supabase.from("profiles").select("user_id,username,display_name").or(`username.ilike.%${username}%,display_name.ilike.%${username}%`).limit(20);if(error)throw error;return data||[]}
+async function createDMById(otherUserId,displayName="User"){
+  const otherId=String(otherUserId||""); if(!otherId||otherId===String(uid))return;
+  const {data:existingMembers}=await supabase.from("conversation_members").select("conversation_id,user_id").in("user_id",[uid,otherId]);
+  const map=new Map();(existingMembers||[]).forEach(x=>{if(!map.has(x.conversation_id))map.set(x.conversation_id,[]);map.get(x.conversation_id).push(x.user_id)});
+  let id=[...map.entries()].find(([_,ids])=>ids.length===2&&ids.includes(uid)&&ids.includes(otherId))?.[0];
+  if(!id){const c=await safeInsert("conversations",{type:"dm",created_by:uid});if(c.error)return toast(c.error.message,"error");id=c.data.id;const {error}=await supabase.from("conversation_members").insert([{conversation_id:id,user_id:uid},{conversation_id:id,user_id:otherId}]);if(error)return toast(error.message,"error");}
+  await loadConversations();openConversation(id);
+}
+async function createDM(username){const users=await findUser(username.trim());const other=users.find(x=>x.user_id!==uid);if(!other)return toast("User not found.","error");return createDMById(other.user_id,other.display_name||other.username||"User")}
+async function createGroup(){const raw=prompt("Group name:");if(!raw)return;const names=prompt("Enter usernames separated by commas. You will be included automatically:");const usernames=(names||"").split(",").map(x=>x.trim()).filter(Boolean);const ids=[uid];for(const n of usernames){const u=await findUser(n);if(u[0]&&!ids.includes(u[0].user_id))ids.push(u[0].user_id)}const c=await safeInsert("conversations",{type:"group",name:raw.trim(),created_by:uid});if(c.error)return toast(c.error.message,"error");const {error}=await supabase.from("conversation_members").insert(ids.map(user_id=>({conversation_id:c.data.id,user_id})));if(error)return toast(error.message,"error");await loadConversations();openConversation(c.data.id)}
+$("newDmBtn").onclick=()=>{const u=prompt("Enter a name or username to message:");if(u)createDM(u)};$('newGroupBtn').onclick=createGroup;$('chatSearch').oninput=async e=>{const q=e.target.value.trim();if(!q){loadConversations();return}const users=await findUser(q);$("chatItems").innerHTML=users.map(u=>{const n=u.display_name||u.username||"User";return `<div class="chat-item" data-new-user="${escAttr(u.user_id)}"><div class="avatar">${initials(n)}</div><div class="chat-item-text"><strong>${esc(n)}</strong><span>${esc(u.username?"@"+u.username:"No username set")} · Start a message</span></div></div>`}).join("")||'<div class="empty">No users found.</div>';document.querySelectorAll("[data-new-user]").forEach(x=>x.onclick=()=>createDMById(x.dataset.newUser));};
+
+/* Messenger realtime: keep the active chat live without forcing the user to reload or lose scroll position. */
+let liveMessageChannel=null;
+function startLiveMessages(){
+  if(liveMessageChannel)return;
+  liveMessageChannel=supabase.channel("litanya-live-messages")
+    .on("postgres_changes",{event:"INSERT",schema:"public",table:"messages"},async payload=>{
+      const m=payload.new||{};
+      if(!m.conversation_id)return;
+      if(String(m.sender_id)===String(uid))return;
+      if(String(m.conversation_id)===String(activeConversation)){
+        await loadMessages();
+      }
+      await loadConversations();
+    }).subscribe();
+}
+startLiveMessages();
+
+/* ===== Notifications / profile ===== */
+async function loadNotifications(markRead=false){
+  const {data,error}=await supabase.from("notifications").select("*").eq("user_id",uid).order("created_at",{ascending:false}).limit(100);
+  if(error){$("notificationsList").innerHTML=`<div class="error">${esc(error.message)}</div>`;return}
+  $("notificationsList").innerHTML=(data||[]).map(n=>{
+    const target=n.post_id?` data-notif-post="${escAttr(n.post_id)}" data-notif-comment="${escAttr(n.comment_id||"")}"`:(n.conversation_id?` data-notif-conversation="${escAttr(n.conversation_id)}"` : "");
+    return `<div class="notice-item ${n.is_read?"":"unread"}" data-id="${escAttr(n.id||"")}"${target}><div class="avatar">✦</div><div class="notice-body"><strong>${esc(n.title)}</strong><p>${esc(n.body)}</p><span class="timestamp">${esc(relativeTime(n.created_at))}</span></div></div>`;
+  }).join("")||'<div class="empty">No notifications yet.</div>';
+  const unread=(data||[]).filter(n=>!n.is_read).length;
+  $("navNotifCount").textContent=unread?` (${unread})`:"";
+  document.querySelectorAll("[data-notif-post]").forEach(el=>el.onclick=async()=>{
+    const postId=el.getAttribute("data-notif-post");
+    const commentId=el.getAttribute("data-notif-comment")||null;
+    if(!postId)return;
+    await supabase.from("notifications").update({is_read:true}).eq("id",el.dataset.id||"");
+    openPostView(postId,commentId?`comment-${commentId}`:null,true);
+  });
+  document.querySelectorAll("[data-notif-conversation]").forEach(el=>el.onclick=async()=>{await supabase.from("notifications").update({is_read:true}).eq("id",el.dataset.id||"");showPage("messenger");await loadConversations();openConversation(el.getAttribute("data-notif-conversation"));});
+  if(markRead && unread){await supabase.from("notifications").update({is_read:true}).eq("user_id",uid).eq("is_read",false);$("navNotifCount").textContent="";}
+}
+async function loadProfilePage(){if(!profile)return;$("profileUsername").textContent="@"+profile.username;$("profileBio").textContent=profile.bio||"No bio yet.";const {data:posts}=await supabase.from("freedom_posts").select("*").eq("user_id",uid).order("created_at",{ascending:false});const ps=posts||[];$("statPosts").textContent=ps.length;const ids=ps.map(x=>x.id);const {data:likes}=ids.length?await supabase.from("post_likes").select("post_id").in("post_id",ids):{data:[]};const {data:comments}=ids.length?await supabase.from("comments").select("id").in("post_id",ids):{data:[]};$("statLikes").textContent=(likes||[]).length;$("statComments").textContent=(comments||[]).length;ps.forEach(p=>postCache.set(String(p.id),p));$("profilePosts").innerHTML=ps.length?ps.map(p=>postCard({...p,_likeCount:0,_liked:false},[])).join(""):'<div class="empty">You have not posted yet.</div>'}
+$("editProfileBtn").onclick=()=>showProfileSetup(true);
+
+/* realtime */
+supabase.channel("litanya-messages").on("postgres_changes",{event:"*",schema:"public",table:"messages"},()=>{if(activeConversation)loadMessages()}).subscribe();
+supabase.channel("litanya-notifications").on("postgres_changes",{event:"INSERT",schema:"public",table:"notifications",filter:`user_id=eq.${uid}`},()=>{
+  loadNotifications();
+  toast("You have a new notification.","success");
+}).subscribe();
+
+// Facebook-style live feed: a new post appears immediately without refreshing.
+let livePostChannel=null;
+let pendingNewPosts=[];
+function showNewPostAlert(){
+  const a=$("newPostAlert"); if(!a)return;
+  a.classList.add("show");
+  const b=$("newPostAlertBtn");
+  if(b)b.textContent=`✨ ${pendingNewPosts.length||1} new post${(pendingNewPosts.length||1)>1?"s":""} — tap to see`;
+}
+function hideNewPostAlert(){const a=$("newPostAlert");if(a)a.classList.remove("show");pendingNewPosts=[]}
+async function prependLivePost(p){
+  const box=$("posts");
+  if(!box)return;
+  const id=String(p.id||"");
+  if(!id || document.getElementById(`post-${CSS.escape(id)}`))return;
+  p._likeCount=0;p._liked=false;postCache.set(id,p);
+  const {data:likes}=await supabase.from("post_likes").select("post_id,user_id").eq("post_id",id);
+  const {data:comments}=await supabase.from("comments").select("*").eq("post_id",id).order("created_at",{ascending:true});
+  p._likeCount=(likes||[]).length;p._liked=(likes||[]).some(x=>String(x.user_id)===uid);
+  const html=postCard(p,comments||[]);
+  if(box.querySelector(".empty"))box.innerHTML="";
+  box.insertAdjacentHTML("afterbegin",html);
+  const el=document.getElementById(`post-${CSS.escape(id)}`);
+  if(el){el.classList.add("newly-arrived");bindPostEvents(el);el.scrollIntoView({behavior:"smooth",block:"start"})}
+}
+function startLivePostFeed(){
+  if(livePostChannel)return;
+  livePostChannel=supabase.channel("litanya-live-posts")
+    .on("postgres_changes",{event:"INSERT",schema:"public",table:"freedom_posts"},async payload=>{
+      const p=payload.new||{};
+      const kind=(p.post_type||"freedom").toLowerCase();
+      if(String(p.user_id)===String(uid))return;
+      if(!["freedom","wall","realization"].includes(kind))return;
+      if(kind==="realization"){
+        pendingNewPosts.push(p);
+        if($("realizationsFeed"))showNewPostAlert();
+        return;
+      }
+      pendingNewPosts.push(p);
+      await prependLivePost(p);
+      showNewPostAlert();
+      toast("✨ New post just arrived!","success",3000);
+    }).subscribe();
+}
+$("newPostAlertBtn")?.addEventListener("click",()=>{
+  const first=pendingNewPosts[0];
+  hideNewPostAlert();
+  if(first?.id){openPostView(first.id,null,true);return}
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+startLivePostFeed();
+
+(async()=>{const p=await ensureProfile();if(!p)return;applyProfileUI();await seedThankYouNotification();loadPosts();})();
+})();
+</script>
+</body>
+</html>
